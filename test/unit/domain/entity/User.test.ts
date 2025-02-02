@@ -1,17 +1,18 @@
 import { User } from "../../../../src/domain/entities/User"
+import { randomEmail } from "../../util/random"
 
 it("should create User instance", () => {
-    const user = new User('name1', 'email1', 'cpf1', 'carPlate1', 1)
+    User.create('Name One', randomEmail(), '87748248800', 'ABC-1234', 1)
 })
 
 it("shoud not create User instance with invalid email", () => {
     expect(() => {
-        new User('name1', 'invalidemail', 'cpf1', 'carPlate1', 1)
+        User.create('Name One', 'invalidemail', '87748248800', 'ABC-1234', 1)
     }).toThrow("Invalid email")
 })
 
 it("shoud not create User instance with invalid cpf", () => {
     expect(() => {
-        new User('name1', 'email1', 'invalidcpf', 'carPlate1', 1)
-    }).toThrow("Invalid cpf")
+        User.create('Name One', randomEmail(), 'invalidcpf', 'ABC-1234', 1)
+    }).toThrow("Invalid Cpf")
 })

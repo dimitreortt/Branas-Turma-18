@@ -21,7 +21,7 @@ it("should get a user from email", async () => {
     expect(getUserOutput).not.toBeNull()
     expect(getUserOutput!.user.email).toBe(userEmail)
     expect(getUserOutput!.user.cpf).toBe(user1.cpf)
-    expect(getUserOutput!.user.id).toBe(user1.id)
+    expect(getUserOutput!.user.userId).toBe(user1.user_id)
     expect(getUserOutput!.user.carPlate).toBe(user1.car_plate)
     expect(getUserOutput!.user.userType).toBe(user1.user_type)
 })

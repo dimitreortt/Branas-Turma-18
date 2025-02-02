@@ -1,24 +1,52 @@
+/**
+ * User Types:
+ * 1 -> Passenger
+ * 2 -> Driver
+ */
+
+import { CarPlate } from "./CarPlate"
+import { Cpf } from "./Cpf"
+import { Email } from "./Email"
+import { Name } from "./Name"
+import { UUID } from "./UUID"
+
 export class User {
-    constructor(readonly name: string, readonly email: string, readonly cpf: string, readonly carPlate: string, readonly userType: number) {
-        this.validateInput()
+    private userId: UUID
+    private name: Name
+    private email: Email
+    private cpf: Cpf
+    private carPlate: CarPlate
+
+    constructor(userId: string, name: string, email: string, cpf: string, carPlate: string, readonly userType: number) {
+        this.userId = new UUID(userId)
+        this.name = new Name(name)
+        this.email = new Email(email)
+        this.cpf = new Cpf(cpf)
+        this.carPlate = new CarPlate(carPlate)
     }
 
-    private validateInput() {
-        this.validateEmail()
-        this.validateCpf()
+    static create(name: string, email: string, cpf: string, carPlate: string, userType: number) {
+        const userId = UUID.create()
+        return new User(userId.getValue(), name, email, cpf, carPlate, userType)
     }
 
-    private validateEmail() {
-        // Implement email validation logic inside service (or here?)
-        if (this.email === 'invalidemail') {
-            throw new Error('Invalid email')
-        }
+    getUserId() {
+        return this.userId.getValue()
     }
 
-    private validateCpf() {
-        // Implement email validation logic inside service (or here?)
-        if (this.cpf === 'invalidcpf') {
-            throw new Error('Invalid cpf')
-        }
+    getName() {
+        return this.name.getValue()
+    }
+
+    getEmail() {
+        return this.email.getValue()
+    }
+
+    getCpf() {
+        return this.cpf.getValue()
+    }
+
+    getCarPlate() {
+        return this.carPlate.getValue()
     }
 }

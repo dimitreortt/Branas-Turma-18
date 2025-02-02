@@ -18,7 +18,7 @@ beforeAll(async () => {
 })
 
 it("should create a new user", async () => {
-    const input = new CreateUserInput('Name3', 'email3@mail.com', 'Cpf3', 'CarPlate3', 2)
+    const input = new CreateUserInput('Name Three', 'email3@mail.com', '97456321558', 'ABC-1234', 2)
     const output = await createUser.execute(input)
     expect(output).toHaveProperty("id")
 
@@ -27,7 +27,7 @@ it("should create a new user", async () => {
 })
 
 it("should not create a user with email that is already being used", async () => {
-    const input = new CreateUserInput('Name4', 'email4@mail.com', 'Cpf4', 'CarPlate4', 2)
+    const input = new CreateUserInput('Name Four', 'email4@mail.com', '71428793860', 'ABC-1235', 2)
     await createUser.execute(input)
     await expect(
         createUser.execute(input)

@@ -29,3 +29,8 @@ final order will be:
 3. create a test for CreateUser usecase
 
 Overall mentality: dig into the next feature (usecase) and find out which are the building blocks, and build them bottom to top.
+
+
+###
+Esperando acabar o curso pra saber se vou refatorar:
+* daos e repos retornando dto no lugar de entity
