@@ -16,3 +16,5 @@ it("shoud not create User instance with invalid cpf", () => {
         User.create('Name One', randomEmail(), 'invalidcpf', 'ABC-1234', 1)
     }).toThrow("Invalid Cpf")
 })
+
+// TODO: test invalid car plate, name

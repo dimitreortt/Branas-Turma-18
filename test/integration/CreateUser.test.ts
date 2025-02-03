@@ -1,4 +1,5 @@
 import { CreateUserInput } from "../../src/application/dto/CreateUserInput"
+import { Registry } from "../../src/application/Registry"
 import { CreateUser } from "../../src/application/usecase/CreateUser"
 import { UserDAOI } from "../../src/domain/dao/UserDAOI"
 import { UserDAO } from "../../src/infra/dao/UserDAO"
@@ -14,7 +15,9 @@ beforeAll(async () => {
    database = await new DatabaseMock().build()
    userDao = new UserDAO(database)
    userRepo = new UserRepository(database)
-   createUser = new CreateUser(userDao, userRepo)
+   Registry.getInstance().provide('userDao', userDao)
+   Registry.getInstance().provide('userRepository', userRepo)
+   createUser = new CreateUser()
 })
 
 it("should create a new user", async () => {
