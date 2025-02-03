@@ -14,31 +14,36 @@ let rideRepository: RideRepositoryI
 let userDao: UserDAOI
 
 beforeAll(async () => {
-   database = await new DatabaseMock().build()
-   rideDao = new RideDAO(database)
-   rideRepository = new RideRepository(database)
-   userDao = new UserDAO(database)
+	database = await new DatabaseMock().build()
+	rideDao = new RideDAO(database)
+	rideRepository = new RideRepository(database)
+	userDao = new UserDAO(database)
 })
 
+const fromLat = -27.584905257808835
+const fromLong = -48.545022195325124
+const toLat = -27.496887588317275
+const toLong = -48.522234807851476
+
 it("should request (create) a ride", async () => {
-    const { user_id: passengerId } = await database.addDummyUser1(randomEmail(), 1)
-    const input = new RequestRideInput(passengerId)
-    const requestRide = new RequestRide(rideDao, rideRepository, userDao)
-    const output = await requestRide.execute(input)
-    expect(output.rideId).toBeTruthy()
+	const { user_id: passengerId } = await database.addDummyUser1(randomEmail(), 1)
+	const input = new RequestRideInput(passengerId, fromLat, fromLong, toLat, toLong)
+	const requestRide = new RequestRide(rideDao, rideRepository, userDao)
+	const output = await requestRide.execute(input)
+	expect(output.rideId).toBeTruthy()
 })
 
 it("should not create a ride if passenger has open ride", async () => {
-    const { user_id: passengerId } = await database.addDummyUser1(randomEmail(), 1)
-    await database.addDummyRide1(passengerId)
-    const input = new RequestRideInput(passengerId)
-    const requestRide = new RequestRide(rideDao, rideRepository, userDao)
-    await expect(requestRide.execute(input)).rejects.toThrow('Passenger has open ride')
+	const { user_id: passengerId } = await database.addDummyUser1(randomEmail(), 1)
+	await database.addDummyRide1(passengerId)
+	const input = new RequestRideInput(passengerId, fromLat, fromLong, toLat, toLong)
+	const requestRide = new RequestRide(rideDao, rideRepository, userDao)
+	await expect(requestRide.execute(input)).rejects.toThrow("Passenger has open ride")
 })
 
 it("should not create a ride if user id is not from a passenger user", async () => {
-    const { user_id: driverId } = await database.addDummyUser1(randomEmail(), 2)
-    const input = new RequestRideInput(driverId)
-    const requestRide = new RequestRide(rideDao, rideRepository, userDao)
-    await expect(requestRide.execute(input)).rejects.toThrow('Id provided is not from a passenger user')
+	const { user_id: driverId } = await database.addDummyUser1(randomEmail(), 2)
+	const input = new RequestRideInput(driverId, fromLat, fromLong, toLat, toLong)
+	const requestRide = new RequestRide(rideDao, rideRepository, userDao)
+	await expect(requestRide.execute(input)).rejects.toThrow("Id provided is not from a passenger user")
 })
