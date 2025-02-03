@@ -3,7 +3,7 @@ import { User } from "../../domain/entities/User";
 import { UserRepositoryI } from "../../infra/repository/UserRepository";
 import { CreateUserInput } from "../dto/CreateUserInput";
 import { CreateUserOutput } from "../dto/CreateUserOutput";
-import { inject } from "../Registry";
+import { inject } from "../../infra/di/Registry";
 
 export class CreateUser {
     @inject('userDao')

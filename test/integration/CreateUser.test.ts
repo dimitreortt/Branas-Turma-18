@@ -1,5 +1,5 @@
 import { CreateUserInput } from "../../src/application/dto/CreateUserInput"
-import { Registry } from "../../src/application/Registry"
+import { Registry } from "../../src/infra/di/Registry"
 import { CreateUser } from "../../src/application/usecase/CreateUser"
 import { UserDAOI } from "../../src/domain/dao/UserDAOI"
 import { UserDAO } from "../../src/infra/dao/UserDAO"

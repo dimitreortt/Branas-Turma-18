@@ -25,8 +25,7 @@ it("should request (create) a ride", async () => {
     const input = new RequestRideInput(passengerId)
     const requestRide = new RequestRide(rideDao, rideRepository, userDao)
     const output = await requestRide.execute(input)
-    expect(output).toHaveProperty('rideId')
-    expect(typeof output.rideId).toBe('string')
+    expect(output.rideId).toBeTruthy()
 })
 
 it("should not create a ride if passenger has open ride", async () => {
