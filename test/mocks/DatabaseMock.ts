@@ -1,18 +1,17 @@
-import { Database } from "../../src/infra/database/Database";
-import { newDb } from 'pg-mem';
-import { randomUUID } from "../unit/util/random";
+import { Database } from "../../src/infra/database/Database"
+import { newDb } from "pg-mem"
+import { randomLat, randomLong, randomUUID } from "../unit/util/random"
 
 export class DatabaseMock implements Database {
-    pgp: any
+	pgp: any
 
-    constructor() {
-    }
+	constructor() {}
 
-    async build() {
-        this.pgp = await newDb().adapters.createPgPromise();
-        await this.pgp.connect();
+	async build() {
+		this.pgp = await newDb().adapters.createPgPromise()
+		await this.pgp.connect()
 
-        await this.pgp.query(`
+		await this.pgp.query(`
             CREATE SCHEMA online_taxi;
 
             CREATE TABLE online_taxi.user (
@@ -41,20 +40,31 @@ export class DatabaseMock implements Database {
 
         `)
 
-        return this
-    }
+		return this
+	}
 
-    async query(statement: string, params?: any): Promise<any[]> {
-        return this.pgp.query(statement, params)
-    }
+	async query(statement: string, params?: any): Promise<any[]> {
+		return this.pgp.query(statement, params)
+	}
 
-    async addDummyUser1(email: string, userType: number = 1): Promise<any>  {
-        const result = await this.pgp.query('insert into online_taxi.user (user_id, name, email, cpf, car_plate, user_type) values ($1, $2, $3, $4, $5, $6) returning *', [randomUUID(), 'John Doe1', email, 'cpf1', 'car_plate1', userType])
-        return result[0]
-    }
+	async addDummyUser1(email: string, userType: number = 1): Promise<DBOutput> {
+		const result = await this.pgp.query("insert into online_taxi.user (user_id, name, email, cpf, car_plate, user_type) values ($1, $2, $3, $4, $5, $6) returning *", [randomUUID(), "John Doe1", email, "cpf1", "car_plate1", userType])
+		return result[0]
+	}
 
-    async addDummyRide1(passengerId: string): Promise<any>  {
-        const result = await this.pgp.query('insert into online_taxi.ride (ride_id, passenger_id, status) values ($1, $2, $3) returning *', [randomUUID(), passengerId, 'requested'])
-        return result[0]
-    }
+	async addFakeRide({ passengerId, driverId }: FakeRideInput = {}): Promise<DBOutput> {
+		if (!driverId) driverId = randomUUID()
+		if (!passengerId) passengerId = randomUUID()
+		const result = await this.pgp.query("insert into online_taxi.ride (ride_id, passenger_id, status, from_lat, from_long, to_lat, to_long) values ($1, $2, $3, $4, $5, $6, $7) returning *", [driverId, passengerId, "requested", randomLat(), randomLong(), randomLat(), randomLong()])
+		return result[0]
+	}
+}
+
+type DBOutput = {
+	[key: string]: string
+}
+
+type FakeRideInput = {
+	passengerId?: string
+	driverId?: string
 }

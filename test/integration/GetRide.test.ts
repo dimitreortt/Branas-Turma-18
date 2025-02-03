@@ -9,17 +9,17 @@ let database: DatabaseMock
 let rideDao: RideDAOI
 
 beforeAll(async () => {
-   database = await new DatabaseMock().build()
-   rideDao = new RideDAO(database)
+	database = await new DatabaseMock().build()
+	rideDao = new RideDAO(database)
 })
 
 it("should get a ride", async () => {
-    const { ride_id: rideId, passenger_id: passengerId } = await database.addDummyRide1(randomUUID())
-    const getRide = new GetRide(rideDao)
-    const input = new GetRideInput(rideId)
-    const output = await getRide.execute(input)
-  
-    expect(output).toBeTruthy()
-    expect(output!.ride).toHaveProperty('rideId')
-    expect(output!.ride.passengerId).toEqual(passengerId)
+	const { ride_id: rideId, passenger_id: passengerId } = await database.addFakeRide()
+	const getRide = new GetRide(rideDao)
+	const input = new GetRideInput(rideId)
+	const output = await getRide.execute(input)
+
+	expect(output).toBeTruthy()
+	expect(output!.ride).toHaveProperty("rideId")
+	expect(output!.ride.passengerId).toEqual(passengerId)
 })

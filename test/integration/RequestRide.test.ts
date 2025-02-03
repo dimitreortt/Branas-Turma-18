@@ -35,7 +35,7 @@ it("should request (create) a ride", async () => {
 
 it("should not create a ride if passenger has open ride", async () => {
 	const { user_id: passengerId } = await database.addDummyUser1(randomEmail(), 1)
-	await database.addDummyRide1(passengerId)
+	await database.addFakeRide({ passengerId })
 	const input = new RequestRideInput(passengerId, fromLat, fromLong, toLat, toLong)
 	const requestRide = new RequestRide(rideDao, rideRepository, userDao)
 	await expect(requestRide.execute(input)).rejects.toThrow("Passenger has open ride")
