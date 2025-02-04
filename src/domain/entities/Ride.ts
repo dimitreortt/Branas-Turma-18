@@ -29,6 +29,10 @@ export class Ride {
 		return this.rideId.getValue()
 	}
 
+	getDriverId() {
+		return this.driverId?.getValue()
+	}
+
 	getPassengerId() {
 		return this.passengerId.getValue()
 	}
