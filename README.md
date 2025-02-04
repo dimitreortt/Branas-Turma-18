@@ -10,9 +10,8 @@ Você não pode escrever mais código do que o suficiente para passar nos testes
 
 ### Run Jest
 
-env TEST_FILE=<file_to_run> npx jest --watchAll --passWithNoTests
-(don't pass file to run all files)
-
+npx jest --watchAll --passWithNoTests
+npx jest <path_to_file>
 
 
 ### Good flow for TDD:
@@ -30,7 +29,11 @@ final order will be:
 
 Overall mentality: dig into the next feature (usecase) and find out which are the building blocks, and build them bottom to top.
 
+Other option?: first start the usecase test and then go to the others (use case driven development)
 
 ###
 Esperando acabar o curso pra saber se vou refatorar:
 * daos e repos retornando dto no lugar de entity
+* no final onde vai ficar esse Registry que criei?
+* considerando se vou refatorar os retornos dos usecases, no momento criei DTOs só pra isso, posso fazer como ele fez na aula 3, só definir type Input Output, sem criar a classe da DTO
+* seria um fluxo bem legal, retornar entity do repository e não DTO... (legal também não ter DAO, só repo (costume mesmo))

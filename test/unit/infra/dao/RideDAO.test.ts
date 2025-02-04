@@ -17,8 +17,7 @@ it("should get a ride", async () => {
 })
 
 it("should not get a ride that does not exist", async () => {
-	const ride = await rideDao.getRide(randomUUID())
-	expect(ride).toBeNull()
+	await expect(rideDao.getRide(randomUUID())).rejects.toThrow('Ride does not exist')
 })
 
 it("should check that a passenger does not have open rides", async () => {
