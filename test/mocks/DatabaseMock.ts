@@ -38,6 +38,13 @@ export class DatabaseMock implements Database {
                 to_long numeric
             );
 
+            CREATE TABLE online_taxi.position (
+                position_id uuid primary key,
+                ride_id uuid not null,
+                lat numeric not null,
+                long numeric not null,
+                date timestamp default now()
+            );
         `)
 
 		return this
@@ -52,10 +59,11 @@ export class DatabaseMock implements Database {
 		return result[0]
 	}
 
-	async addFakeRide({ passengerId, driverId }: FakeRideInput = {}): Promise<DBOutput> {
+	async addFakeRide({ passengerId, driverId, status }: FakeRideInput = {}): Promise<DBOutput> {
 		if (!driverId) driverId = randomUUID()
 		if (!passengerId) passengerId = randomUUID()
-		const result = await this.pgp.query("insert into online_taxi.ride (ride_id, passenger_id, status, from_lat, from_long, to_lat, to_long) values ($1, $2, $3, $4, $5, $6, $7) returning *", [driverId, passengerId, "requested", randomLat(), randomLong(), randomLat(), randomLong()])
+		if (!status) status = 'requested'
+		const result = await this.pgp.query("insert into online_taxi.ride (ride_id, passenger_id, status, from_lat, from_long, to_lat, to_long) values ($1, $2, $3, $4, $5, $6, $7) returning *", [driverId, passengerId, status, randomLat(), randomLong(), randomLat(), randomLong()])
 		return result[0]
 	}
 }
@@ -64,7 +72,12 @@ type DBOutput = {
 	[key: string]: string
 }
 
+type DBOutputArray = [{
+	[key: string]: string
+}]
+
 type FakeRideInput = {
 	passengerId?: string
 	driverId?: string
+	status?: string
 }

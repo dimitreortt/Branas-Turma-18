@@ -13,9 +13,9 @@ export const randomUUID = () => {
 }
 
 export const randomLat = () => {
-	return (Math.random() * 180 - 90).toFixed(6) // Range: -90 to +90
+	return (Math.random() * 180 - 90) // Range: -90 to +90
 }
 
 export function randomLong() {
-	return (Math.random() * 360 - 180).toFixed(6) // Range: -180 to +180
+	return (Math.random() * 360 - 180) // Range: -180 to +180
 }

@@ -71,7 +71,7 @@
             "let database: DatabaseMock",
             "",
             "beforeAll(async () => {",
-            "   database = await new DatabaseMock$1().build()",
+            "    database = await new DatabaseMock$1().build()",
             "})"
         ]
     },

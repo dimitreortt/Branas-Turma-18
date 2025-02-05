@@ -3,7 +3,6 @@ import { UserDAOI } from "../../domain/dao/UserDAOI"
 import { Ride } from "../../domain/entities/Ride"
 import { RideRepositoryI } from "../../infra/repository/RideRepository"
 import { RequestRideInput } from "../dto/RequestRideInput"
-import { RequestRideOutput } from "../dto/RequestRideOutput"
 
 export class RequestRide {
 	constructor(private rideDAO: RideDAOI, private rideRepository: RideRepositoryI, private userDao: UserDAOI) {}
@@ -19,6 +18,10 @@ export class RequestRide {
 		}
 		const ride = Ride.create(input.passengerId, input.fromLat, input.fromLong, input.toLat, input.toLong)
 		const rideId = await this.rideRepository.save(ride)
-		return new RequestRideOutput(rideId)
+        return { rideId }
 	}
+}
+
+type RequestRideOutput = {
+    rideId: string
 }
