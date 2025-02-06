@@ -1,5 +1,4 @@
 import { UserDAOI } from "../../domain/dao/UserDAOI";
-import { GetUserInput } from "../dto/GetUserInput";
 import { GetUserOutput } from "../dto/GetUserOutput";
 
 export class GetUser {
@@ -12,4 +11,8 @@ export class GetUser {
         }
         return new GetUserOutput(user)
     }
+}
+
+type GetUserInput = {
+    email: string
 }
