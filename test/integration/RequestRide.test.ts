@@ -17,7 +17,7 @@ beforeAll(async () => {
 	database = await new DatabaseMock().build()
 	rideDao = new RideDAO(database)
 	rideRepository = new RideRepository(database)
-	userDao = new UserDAO(database)
+	userDao = new UserDAO()
 })
 
 const fromLat = -27.584905257808835

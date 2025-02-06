@@ -13,8 +13,8 @@ let createUser: CreateUser
 
 beforeAll(async () => {
    database = await new DatabaseMock().build()
-   userDao = new UserDAO(database)
-   userRepo = new UserRepository(database)
+   userDao = new UserDAO()
+   userRepo = new UserRepository()
    Registry.getInstance().provide('userDao', userDao)
    Registry.getInstance().provide('userRepository', userRepo)
    createUser = new CreateUser()

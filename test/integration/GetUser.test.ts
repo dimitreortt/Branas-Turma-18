@@ -9,7 +9,7 @@ let getUser: GetUser
 
 beforeAll(async () => {
    database = await new DatabaseMock().build()
-   userDao = new UserDAO(database)
+   userDao = new UserDAO()
    getUser = new GetUser(userDao)
 })
 

@@ -8,7 +8,7 @@ let userDao: UserDAOI
 
 beforeAll(async () => {
     database = await new DatabaseMock().build()
-    userDao = new UserDAO(database)
+    userDao = new UserDAO()
 })
 
 it("should get a user by email", async () => {
