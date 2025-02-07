@@ -15,8 +15,7 @@ export class AcceptRide {
 		if (!ride) {
 			throw new Error("Ride does not exist")
 		}
-		ride.setStatus("accepted")
-		ride.setDriverId(input.driverId)
+        ride.accept(input.driverId)
 		await this.rideRepository?.update(ride)
 	}
 }

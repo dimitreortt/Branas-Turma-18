@@ -25,6 +25,18 @@ export class Ride {
 		return new Ride(rideId.getValue(), passengerId, fromLat, fromLong, toLat, toLong, driverId, status)
 	}
 
+    accept(driverId: string) {
+        this.status = "accepted"
+        this.driverId = new UUID(driverId)
+    }
+
+    start() {
+        if (this.status !== "accepted") {
+            throw new Error("Ride is not accepted")
+        }
+        this.status = 'in_progress'
+    }
+
 	getRideId() {
 		return this.rideId.getValue()
 	}
@@ -51,10 +63,6 @@ export class Ride {
 
 	getTo() {
 		return this.to
-	}
-
-	setStatus(status: string) {
-		this.status = status
 	}
 
 	setDriverId(driverId: string) {

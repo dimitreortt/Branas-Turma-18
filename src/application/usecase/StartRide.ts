@@ -15,10 +15,7 @@ export class StartRide {
         if (!ride) { 
             throw new Error('Ride not found')
         }
-        if (ride.getStatus() !== "accepted") {
-            throw new Error("Ride is not accepted")
-        }
-        ride.setStatus('in_progress')
+        ride.start()
         await this.rideRepository?.updateStatus(ride)
     }
 }
