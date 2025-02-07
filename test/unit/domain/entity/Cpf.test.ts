@@ -1,4 +1,4 @@
-import { Cpf } from "../../../../src/domain/entities/Cpf"
+import { Cpf } from "../../../../src/domain/vo/Cpf"
 
 test("Deve validar um cpf com o digito diferente de zero", function () {
 	const cpf = "97456321558";

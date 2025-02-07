@@ -1,5 +1,6 @@
 import { UserDAOI } from "../../../../src/domain/dao/UserDAOI"
 import { UserDAO } from "../../../../src/infra/dao/UserDAO"
+import { Registry } from "../../../../src/infra/di/Registry"
 import { DatabaseMock } from "../../../mocks/DatabaseMock"
 import { randomUUID } from "../../util/random"
 
@@ -8,6 +9,7 @@ let userDao: UserDAOI
 
 beforeAll(async () => {
     database = await new DatabaseMock().build()
+    Registry.getInstance().provide('database', database)
     userDao = new UserDAO()
 })
 

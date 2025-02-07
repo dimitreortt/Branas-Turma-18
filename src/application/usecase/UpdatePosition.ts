@@ -1,5 +1,5 @@
 import { RideDAOI } from "../../domain/dao/RideDAOI"
-import { Position } from "../../domain/entities/Position"
+import { Position } from "../../domain/vo/Position"
 import { inject } from "../../infra/di/Registry"
 import { RideRepositoryI } from "../../infra/repository/RideRepository"
 

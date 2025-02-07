@@ -1,4 +1,4 @@
-import { CarPlate } from "../../../../src/domain/entities/CarPlate"
+import { CarPlate } from "../../../../src/domain/vo/CarPlate"
 
 it("should create carPlates", async () => {
     new CarPlate("ABC-1234") // ✅ true (Formato antigo)

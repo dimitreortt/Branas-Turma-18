@@ -1,4 +1,4 @@
-import { Name } from "../../../../src/domain/entities/Name";
+import { Name } from "../../../../src/domain/vo/Name";
 
 it("should create a name", async () => {
     const name = new Name('Valid Name');

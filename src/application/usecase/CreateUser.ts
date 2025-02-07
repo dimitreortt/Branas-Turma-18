@@ -19,7 +19,6 @@ export class CreateUser {
         if (existingUser) {
             throw new Error('Email already being used')
         }
-        console.log('aqui')
         const user = User.create(name, email, cpf, carPlate, userType);
         const userId = await this.userRepository?.save(user);
         return new CreateUserOutput(userId)

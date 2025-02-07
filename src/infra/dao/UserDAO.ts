@@ -11,7 +11,6 @@ export class UserDAO implements UserDAOI {
     constructor() {}
 
     async getUserByEmail(email: string): Promise<UserDTO | null> {
-        console.log(this.database)
         const result = await this.database?.query('select * from online_taxi.user where email = $1', [email]);
         if (result?.length === 0) {
             return null;

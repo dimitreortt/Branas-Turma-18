@@ -1,6 +1,7 @@
 import { GetUserInput } from "../../src/application/dto/GetUserInput"
 import { GetUser } from "../../src/application/query/GetUser"
 import { UserDAO } from "../../src/infra/dao/UserDAO"
+import { Registry } from "../../src/infra/di/Registry"
 import { DatabaseMock } from "../mocks/DatabaseMock"
 
 let database: any
@@ -8,9 +9,10 @@ let userDao: UserDAO
 let getUser: GetUser
 
 beforeAll(async () => {
-   database = await new DatabaseMock().build()
-   userDao = new UserDAO()
-   getUser = new GetUser(userDao)
+    database = await new DatabaseMock().build()
+    Registry.getInstance().provide('database', database)
+    Registry.getInstance().provide('userDao', new UserDAO())
+    getUser = new GetUser()
 })
 
 it("should get a user from email", async () => {

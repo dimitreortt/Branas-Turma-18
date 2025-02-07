@@ -1,4 +1,5 @@
 import { RideDAO } from "../../../../src/infra/dao/RideDAO"
+import { Registry } from "../../../../src/infra/di/Registry"
 import { DatabaseMock } from "../../../mocks/DatabaseMock"
 import { randomInt, randomUUID } from "../../util/random"
 
@@ -7,7 +8,8 @@ let rideDao: RideDAO
 
 beforeAll(async () => {
 	database = await new DatabaseMock().build()
-	rideDao = new RideDAO(database)
+    Registry.getInstance().provide('database', database)
+	rideDao = new RideDAO()
 })
 
 it("should get a ride", async () => {
@@ -28,7 +30,7 @@ it("should check that a passenger does not have open rides", async () => {
 it("should check that a passenger have open rides", async () => {
 	const passengerId = randomUUID()
 	await database.addFakeRide({ passengerId })
-	const rideDao = new RideDAO(database)
+	const rideDao = new RideDAO()
 	const result = await rideDao.checkOpenRides(passengerId)
 	expect(result).toBeTruthy()
 })

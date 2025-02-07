@@ -1,15 +1,17 @@
-import { Position } from "../../../../src/domain/entities/Position"
+import { Position } from "../../../../src/domain/vo/Position"
 import { Ride } from "../../../../src/domain/entities/Ride"
 import { RideRepository, RideRepositoryI } from "../../../../src/infra/repository/RideRepository"
 import { DatabaseMock } from "../../../mocks/DatabaseMock"
 import { randomUUID } from "../../util/random"
+import { Registry } from "../../../../src/infra/di/Registry"
 
 let database: DatabaseMock
 let rideRepo: RideRepositoryI
 
 beforeAll(async () => {
     database = await new DatabaseMock().build()
-    rideRepo = new RideRepository(database)
+    Registry.getInstance().provide('database', database)
+    rideRepo = new RideRepository()
 })
 
 const fromLat = -27.584905257808835

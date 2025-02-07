@@ -1,4 +1,5 @@
 import { User } from "../../../../src/domain/entities/User"
+import { Registry } from "../../../../src/infra/di/Registry"
 import { UserRepository } from "../../../../src/infra/repository/UserRepository"
 import { DatabaseMock } from "../../../mocks/DatabaseMock"
 
@@ -6,11 +7,12 @@ let database: any
 
 beforeAll(async () => {
    database = await new DatabaseMock().build()
+   Registry.getInstance().provide('database', database)
 })
 
 it("should save an user", async () => {
     const user = User.create('Name Two', 'email2@mail.com', '87748248800', 'ABC-1234', 2)
-    const userRepo = new UserRepository(database)
+    const userRepo = new UserRepository()
 
     await userRepo.save(user)
 

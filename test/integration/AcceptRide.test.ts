@@ -9,10 +9,9 @@ let database: DatabaseMock
 
 beforeAll(async () => {
 	database = await new DatabaseMock().build()
-	const rideDao = new RideDAO(database)
-	const rideRepository = new RideRepository(database)
-	Registry.getInstance().provide("rideDao", rideDao)
-	Registry.getInstance().provide("rideRepository", rideRepository)
+    Registry.getInstance().provide('database', database)
+	Registry.getInstance().provide("rideDao", new RideDAO())
+	Registry.getInstance().provide("rideRepository", new RideRepository())
 })
 
 it("should accept a ride", async () => {

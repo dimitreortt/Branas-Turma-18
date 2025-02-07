@@ -1,11 +1,16 @@
 import { RideDAOI } from "../../domain/dao/RideDAOI";
-import { Coords } from "../../domain/entities/Coords";
+import { Coords } from "../../domain/vo/Coords";
+import { inject } from "../../infra/di/Registry";
 
 export class GetRide {
-    constructor(private rideDao: RideDAOI) { }
+    @inject('rideDao')
+    private rideDao?: RideDAOI
+
+    constructor() { }
 
     async execute(input: GetRideInput): Promise<GetRideOutput> {
-        const ride = await this.rideDao.getRide(input.rideId)
+        const ride = await this.rideDao?.getRide(input.rideId)
+        if (!ride) throw new Error('Ride not found')
         return {
             rideId: ride.getRideId(),
             passengerId: ride.getPassengerId(),

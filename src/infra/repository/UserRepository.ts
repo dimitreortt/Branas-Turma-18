@@ -13,10 +13,8 @@ export class UserRepository implements UserRepositoryI {
     constructor() {}
 
     async save(user: User): Promise<number> {
-        console.log('aqio')
         const [{ user_id }] = await this.database!.query('insert into online_taxi.user (user_id, name, email, cpf, car_plate, user_type) values ($1, $2, $3, $4, $5, $6) returning user_id', [user.getUserId(), user.getName(), user.getEmail(), user.getCpf(), user.getCarPlate(), user.userType]);
 
         return user_id
     }
 }
-

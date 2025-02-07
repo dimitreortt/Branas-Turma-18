@@ -1,4 +1,4 @@
-import { Coords } from "../../../../src/domain/entities/Coords"
+import { Coords } from "../../../../src/domain/vo/Coords"
 
 it("should create a Coords", () => {
     const lat = -27.584905257808835

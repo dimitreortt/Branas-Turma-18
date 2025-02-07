@@ -28,8 +28,6 @@ export class ExpressAdapter implements HttpServer {
 	}
 
 	listen(port: number): void {
-        console.log('ti aqu')
-
 		return this.app.listen(port, () => {
             console.log('listening on port', port)
         });

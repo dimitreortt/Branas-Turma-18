@@ -1,4 +1,4 @@
-import { Position } from "../../../../src/domain/entities/Position"
+import { Position } from "../../../../src/domain/vo/Position"
 import { randomLat, randomLong, randomUUID } from "../../util/random"
 
 it("should create a position", async () => {

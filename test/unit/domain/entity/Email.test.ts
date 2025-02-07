@@ -1,4 +1,4 @@
-import { Email } from "../../../../src/domain/entities/Email"
+import { Email } from "../../../../src/domain/vo/Email"
 
 it("should create an email", async () => {
     const email = new Email('johndoe@email.com')
