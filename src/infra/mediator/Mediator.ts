@@ -1,20 +1,20 @@
 export class Mediator {
-    callbacks: { eventName: string, callback: Function }[] = [];
+	handlers: { eventName: string; callback: Function }[] = []
 
-    constructor() { }
+	constructor() {}
 
-    register(eventName: string, fn: Function) {
-        this.callbacks.push({
-            eventName: eventName,
-            callback: fn
-        })
-    }
+	register(eventName: string, callback: Function) {
+		this.handlers.push({
+			eventName,
+			callback,
+		})
+	}
 
-    notify(eventName: string, data: any) {
-        for (const item of this.callbacks) {
-            if (item.eventName === eventName) {
-                item.callback(data);
-            }
-        }
-    }
+	async notify(eventName: string, data: any) {
+		for (const handler of this.handlers) {
+			if (handler.eventName === eventName) {
+				await handler.callback(data)
+			}
+		}
+	}
 }
