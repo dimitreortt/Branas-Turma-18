@@ -39,7 +39,7 @@ it("should update the ride position", async () => {
 it("should not update the ride position if the ride is not in progress", async () => {
     const updatePosition = new UpdatePosition()
 
-    for (const status in ['requested', 'accepted']) {
+    for (const status of ['requested', 'accepted']) {
         const { ride_id } = await database.addFakeRide({ status })
         await expect(updatePosition.execute({ rideId: ride_id, lat: lat1, long: long1 })).rejects.toThrow("Ride is not in progress")
     }

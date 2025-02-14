@@ -22,7 +22,7 @@ export class RideDAO implements RideDAOI {
 		if (!result?.length) {
 			throw new Error("Ride does not exist")
 		}
-		const [{ ride_id, passenger_id, driver_id, status, from_lat, from_long, to_lat, to_long }] = result
-		return new Ride(ride_id, passenger_id, from_lat, from_long, to_lat, to_long, driver_id, status)
+		const [{ ride_id, passenger_id, driver_id, status, from_lat, from_long, to_lat, to_long, fare, distance }] = result
+		return new Ride(ride_id, passenger_id, parseFloat(from_lat), parseFloat(from_long), parseFloat(to_lat), parseFloat(to_long), driver_id, status, fare, distance)
 	}
 }

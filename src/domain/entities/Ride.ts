@@ -1,4 +1,8 @@
+import { DistanceCalculator } from "../service/DistanceCalculator"
+import { FareCalculator } from "../service/FareCalculator"
 import { Coords } from "../vo/Coords"
+import { Position } from "../vo/Position"
+import { RequestedStatus, RideStatus, RideStatusFactory } from "../vo/RideStatus"
 import { UUID } from "../vo/UUID"
 
 export class Ride {
@@ -6,18 +10,22 @@ export class Ride {
 	private passengerId: UUID
 	private driverId?: UUID
 	private requestedAt: Date
-	private status: string = "requested"
+	private status: RideStatus = new RequestedStatus()
 	private from: Coords
 	private to: Coords
+	private fare?: number
+	private distance?: number
 
-	constructor(rideId: string, passengerId: string, fromLat: number, fromLong: number, toLat: number, toLong: number, driverId?: string, status?: string) {
+	constructor(rideId: string, passengerId: string, fromLat: number, fromLong: number, toLat: number, toLong: number, driverId?: string, status?: string, fare?: number, distance?: number) {
 		this.rideId = new UUID(rideId)
 		this.passengerId = new UUID(passengerId)
 		if (driverId) this.driverId = new UUID(driverId)
 		this.requestedAt = new Date()
 		this.from = new Coords(fromLat, fromLong)
 		this.to = new Coords(toLat, toLong)
-		if (status) this.status = status
+		if (status) this.status = RideStatusFactory.create(status)
+        this.fare = fare
+        this.distance = distance
 	}
 
 	static create(passengerId: string, fromLat: number, fromLong: number, toLat: number, toLong: number, driverId?: string, status?: string) {
@@ -26,15 +34,18 @@ export class Ride {
 	}
 
     accept(driverId: string) {
-        this.status = "accepted"
+        this.status = this.status.accept()
         this.driverId = new UUID(driverId)
     }
 
     start() {
-        if (this.status !== "accepted") {
-            throw new Error("Ride is not accepted")
-        }
-        this.status = 'in_progress'
+        this.status = this.status.start()
+    }
+
+    complete(positions: Position[]) {
+        this.status = this.status.complete()
+        this.distance = this.calculateDistance(positions)
+        this.fare = FareCalculator.calculate(this.distance)
     }
 
 	getRideId() {
@@ -54,7 +65,7 @@ export class Ride {
 	}
 
 	getStatus() {
-		return this.status
+		return this.status.value
 	}
 
 	getFrom() {
@@ -68,4 +79,22 @@ export class Ride {
 	setDriverId(driverId: string) {
 		this.driverId = new UUID(driverId)
 	}
+
+    calculateDistance(positions: Position[]) {
+        let distance = 0
+        for (const [index, position] of positions.entries()) {
+            const nextPosition = positions[index + 1]
+            if (!nextPosition) continue
+            distance += DistanceCalculator.calculate(position.getCoords(), nextPosition.getCoords())
+        }
+        return distance
+    }
+
+    getFare() {
+        return this.fare
+    }
+
+    getDistance() {
+        return this.distance
+    }
 }

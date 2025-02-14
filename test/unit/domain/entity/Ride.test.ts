@@ -21,3 +21,7 @@ it("should create a ride", () => {
 	expect(ride.getTo().getLong()).toBe(toLong)
 	expect(ride.getStatus()).toEqual("requested")
 })
+
+it("should not finish a ride that", async () => {
+   
+})

@@ -26,8 +26,9 @@ it("should start a ride", async () => {
 it("should not start a ride if it's not in accepted status", async () => {
     const startRide = new StartRide()
 
-    for (const status in ['requested', 'in_progress']) {
-        const { ride_id } = await database.addFakeRide({ status })
-        await expect(startRide.execute({ rideId: ride_id })).rejects.toThrow('Ride is not accepted')
+    for (const status of ['requested', 'in_progress']) {
+        const result = await database.addFakeRide({ status })
+        const { ride_id } = result
+        await expect(startRide.execute({ rideId: ride_id })).rejects.toThrow('Ride is not in accepted state')
     }
 })
