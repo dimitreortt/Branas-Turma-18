@@ -1,5 +1,0 @@
-export class PaymentGateway {
-    constructor() { }
-
-    
-}
