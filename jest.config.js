@@ -4,5 +4,5 @@ module.exports = {
   transform: {
     "^.+.tsx?$": ["ts-jest",{}],
   },
-  testMatch: [process.env.TEST_FILE ? `<rootDir>/test/${process.env.TEST_FILE}` : "<rootDir>/test/**/*.test.ts"],
+  testMatch: ["<rootDir>/**/*.test.ts"],
 };

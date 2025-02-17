@@ -37,3 +37,12 @@ Esperando acabar o curso pra saber se vou refatorar:
 * no final onde vai ficar esse Registry que criei?
 * considerando se vou refatorar os retornos dos usecases, no momento criei DTOs só pra isso, posso fazer como ele fez na aula 3, só definir type Input Output, sem criar a classe da DTO
 * seria um fluxo bem legal, retornar entity do repository e não DTO... (legal também não ter DAO, só repo (costume mesmo))
+
+
+### 
+O que eu contrataria terceiros para eu não implementar: (not core domain)
+• Processamento do pagamento (Genérico)
+• Emissão de nota fiscal (Genérico)
+• Gestão do estoque (Genérico)
+• Assinatura digital dos contratos (Genérico)
+• Processamento do pagamento (Genérico)
